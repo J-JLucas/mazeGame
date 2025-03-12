@@ -1,17 +1,17 @@
 #include "common.h"
 int main()
 {
-  unsigned int w = 800;
-  unsigned int h = 600;
-  GLFWwindow *window = startup_opengl("MyProgramName", w, h);
+  unsigned int w = 1280;
+  unsigned int h = 720;
+  GLFWwindow *window = startup_opengl("MazeGame", w, h);
   if (!window) {
     return -1;
   }
 
   /* SHADERS */
   // Load shader source files
-  std::string vertexShaderSource = loadShaderSource("../shaders/basic.vert");
-  std::string fragmentShaderSource = loadShaderSource("../shaders/basic.frag");
+  std::string vertexShaderSource = loadShaderSource("../shaders/cube.vert");
+  std::string fragmentShaderSource = loadShaderSource("../shaders/cube.frag");
   const char *vertexShaderSourceC = vertexShaderSource.c_str();
   const char *fragmentShaderSourceC = fragmentShaderSource.c_str();
 

@@ -73,6 +73,7 @@ inline GLFWwindow *startup_opengl(const char *title, unsigned int width,
     return nullptr;
   }
 
+  glEnable(GL_DEPTH_TEST);
   glViewport(0, 0, width, height);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 

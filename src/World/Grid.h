@@ -4,11 +4,12 @@
 #pragma once
 
 #include "Cell.h"
+#include <vector>
 
 class Grid {
 private:
-  static constexpr unsigned int m = 16;
-  static constexpr unsigned int n = 16;
+  static constexpr unsigned int m = 8;
+  static constexpr unsigned int n = 8;
   Cell cells[m][n];
 
 public:
@@ -16,4 +17,5 @@ public:
   int getNumRows() { return m; }
   int getNumCols() { return n; }
   void printGridToConsole();
+  std::vector<float> buildMazeGeometry(unsigned int scaleFactor);
 };

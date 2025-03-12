@@ -24,4 +24,5 @@ public:
 
   void link(Direction d, Cell *neighbor, bool bidirectional = true);
   void unlink(Direction d, Cell *neighbor, bool bidirectional = true);
+  void buildGeometry();
 };

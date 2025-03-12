@@ -2,6 +2,7 @@
 #include "Cell.h"
 #include "Enums.h"
 #include <iostream>
+#include <vector>
 /* Grid */
 
 // Access operator for cell object pointer at row, column
@@ -49,4 +50,50 @@ void Grid::printGridToConsole()
     // print the wall row strings
     std::cout << top << "\n" << bottom << std::endl;
   }
+}
+
+std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
+{
+  // top left corner is (0, 0)
+  // bottom right corner is (n, m)
+  // each cell is a square of size scale
+  std::vector<float> vertices;
+  for (int i = 0; i < m; i++) {
+    for (int j = 0; j < n; j++) {
+      Cell *cell = &cells[i][j];
+      if (!cell) {
+        continue;
+      }
+
+      /* FLOOR - 2 tri's, 4 vertices (2 shared) */
+      // first triangle
+      // v1
+      vertices.push_back(j); // x
+      vertices.push_back(0); // y is vertical in opengl
+      vertices.push_back(i); // z
+      // v2
+      vertices.push_back(j + 1);
+      vertices.push_back(0);
+      vertices.push_back(i);
+      // v3
+      vertices.push_back(j); // x
+      vertices.push_back(0);
+      vertices.push_back(i + 1);
+
+      // second triangle
+      // v4
+      vertices.push_back(j + 1);
+      vertices.push_back(0);
+      vertices.push_back(i + 1);
+      // v3
+      vertices.push_back(j);
+      vertices.push_back(0);
+      vertices.push_back(i + 1);
+      // v2
+      vertices.push_back(j + 1);
+      vertices.push_back(0);
+      vertices.push_back(i);
+    }
+  }
+  return vertices;
 }
