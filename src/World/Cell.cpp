@@ -82,62 +82,238 @@ void Cell::buildGeometry(std::vector<float> &vertices)
   vertices.push_back(0.35f);
 
   // ** WALLS - 2 tri's, 4 vertices (2 shared) **
-  // if northern most cell, draw north wall
-  // if (i == 0) {
-  // first triangle
-  // v1
-  vertices.push_back(j);
-  vertices.push_back(0);
-  vertices.push_back(i);
-  // c1
-  vertices.push_back(1.0f);
-  vertices.push_back(0.0f);
-  vertices.push_back(0.0f);
-  //
-  // v2
-  vertices.push_back(j + 1);
-  vertices.push_back(0);
-  vertices.push_back(i);
-  // c2
-  vertices.push_back(0.0f);
-  vertices.push_back(1.0f);
-  vertices.push_back(0.0f);
 
-  // v3
-  vertices.push_back(j);
-  vertices.push_back(1);
-  vertices.push_back(i);
-  // c3
-  vertices.push_back(0.0f);
-  vertices.push_back(0.0f);
-  vertices.push_back(1.0f);
+  // if NORTHERN MOST CELL, draw north wall
+  if (i == 0) {
 
-  // second triangle
-  // v3
-  vertices.push_back(j);
-  vertices.push_back(1);
-  vertices.push_back(i);
-  // c3
-  vertices.push_back(1.0f);
-  vertices.push_back(0.0f);
-  vertices.push_back(0.0f);
+    // first triangle
+    // v1
+    vertices.push_back(j);
+    vertices.push_back(0);
+    vertices.push_back(i);
+    // c1
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    //
+    // v2
+    vertices.push_back(j + 1);
+    vertices.push_back(0);
+    vertices.push_back(i);
+    // c2
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
 
-  // v4
-  vertices.push_back(j + 1);
-  vertices.push_back(1);
-  vertices.push_back(i);
-  // c4
-  vertices.push_back(0.0f);
-  vertices.push_back(1.0f);
-  vertices.push_back(0.0f);
+    // v3
+    vertices.push_back(j);
+    vertices.push_back(1);
+    vertices.push_back(i);
+    // c3
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
 
-  // v2
-  vertices.push_back(j + 1);
-  vertices.push_back(0);
-  vertices.push_back(i);
-  // c2
-  vertices.push_back(0.0f);
-  vertices.push_back(0.0f);
-  vertices.push_back(1.0f);
-  //  }
+    // second triangle
+    // v3
+    vertices.push_back(j);
+    vertices.push_back(1);
+    vertices.push_back(i);
+    // c3
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
+    // v4
+    vertices.push_back(j + 1);
+    vertices.push_back(1);
+    vertices.push_back(i);
+    // c4
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+
+    // v2
+    vertices.push_back(j + 1);
+    vertices.push_back(0);
+    vertices.push_back(i);
+    // c2
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+  }
+
+  // if EASTERN MOST CELL, draw east wall
+  if (j == 0) {
+    // first triangle
+    // v1
+    vertices.push_back(j);
+    vertices.push_back(0);
+    vertices.push_back(i);
+    // c1
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
+    // v2
+    vertices.push_back(j);
+    vertices.push_back(0);
+    vertices.push_back(i + 1);
+    // c2
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+
+    // v3
+    vertices.push_back(j);
+    vertices.push_back(1);
+    vertices.push_back(i);
+    // c3
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+
+    // second triangle
+    // v3
+    vertices.push_back(j);
+    vertices.push_back(1);
+    vertices.push_back(i);
+    // c3
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
+    // v4
+    vertices.push_back(j);
+    vertices.push_back(0);
+    vertices.push_back(i + 1);
+    // c4
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+
+    // v2
+    vertices.push_back(j);
+    vertices.push_back(1);
+    vertices.push_back(i + 1);
+    // c2
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+  }
+
+  if (this->isWalled(Direction::EAST)) {
+    // first triangle
+    // v1
+    vertices.push_back(j + 1);
+    vertices.push_back(0);
+    vertices.push_back(i);
+    // c1
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
+    // v2
+    vertices.push_back(j + 1);
+    vertices.push_back(0);
+    vertices.push_back(i + 1);
+    // c2
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+
+    // v3
+    vertices.push_back(j + 1);
+    vertices.push_back(1);
+    vertices.push_back(i);
+    // c3
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+
+    // second triangle
+    // v3
+    vertices.push_back(j + 1);
+    vertices.push_back(1);
+    vertices.push_back(i);
+    // c3
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
+    // v4
+    vertices.push_back(j + 1);
+    vertices.push_back(0);
+    vertices.push_back(i + 1);
+    // c4
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+
+    // v2
+    vertices.push_back(j + 1);
+    vertices.push_back(1);
+    vertices.push_back(i + 1);
+    // c2
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+  }
+  if (this->isWalled(Direction::SOUTH)) {
+    // first triangle
+    // v1
+    vertices.push_back(j);
+    vertices.push_back(0);
+    vertices.push_back(i + 1);
+    // c1
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
+    // v2
+    vertices.push_back(j + 1);
+    vertices.push_back(0);
+    vertices.push_back(i + 1);
+    // c2
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+
+    // v3
+    vertices.push_back(j);
+    vertices.push_back(1);
+    vertices.push_back(i + 1);
+    // c3
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+
+    // second triangle
+    // v3
+    vertices.push_back(j);
+    vertices.push_back(1);
+    vertices.push_back(i + 1);
+    // c3
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
+    // v4
+    vertices.push_back(j + 1);
+    vertices.push_back(0);
+    vertices.push_back(i + 1);
+    // c4
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+
+    // v2
+    vertices.push_back(j + 1);
+    vertices.push_back(1);
+    vertices.push_back(i + 1);
+    // c2
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+  }
 }

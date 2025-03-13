@@ -1,5 +1,6 @@
 #include "../src/common.h"
 #include "testWorldGen.h"
+#include <glm/trigonometric.hpp>
 #include <vector>
 
 #include <glm/glm.hpp>
@@ -103,13 +104,19 @@ int main(int argc, char *argv[])
     // For debugging: remove rotation from model transformation
     glm::mat4 model = glm::mat4(1.0f);
 
-    // Set up the camera to center on the floor plane using glm::lookAt
-    glm::vec3 cameraPos = glm::vec3(8.5f, 2.5f, 4.5f);
+    glm::vec3 cameraPos = glm::vec3(9.0f, 4.0f, 5.0f);
     glm::vec3 cameraTarget = glm::vec3(5.0f, 0.0f, 5.0f);
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    // rotate camera to face north
+    glm::vec3 direction = cameraPos - cameraTarget;
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f),
+                                     glm::vec3(0.0f, 1.0f, 0.0f));
+    direction = glm::vec3(rotation * glm::vec4(direction, 0.0f));
+    cameraPos = cameraTarget + direction;
+
     glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, up);
 
-    // Set up the projection matrix using your variables
     glm::mat4 projection =
         glm::perspective(glm::radians(fov), aspect, 0.1f, 100.0f);
 
