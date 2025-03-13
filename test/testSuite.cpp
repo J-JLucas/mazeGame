@@ -47,12 +47,12 @@ int main(int argc, char *argv[])
 
   // get geometry from world generation
   std::vector<float> object_vertices = testWorldGeneration();
+  std::vector<float> object_rgb;
 
   for (int i = 0; i < object_vertices.size(); i += 3) {
-    {
-      std::cout << "(" << object_vertices[i] << " " << object_vertices[i + 1]
-                << " " << object_vertices[i + 2] << ")" << std::endl;
-    }
+    object_rgb.push_back(0.0f);
+    object_rgb.push_back(0.7f);
+    object_rgb.push_back(0.35f);
   }
 
   // 1)
@@ -80,11 +80,10 @@ int main(int argc, char *argv[])
   unsigned int VBO_colors;
   glGenBuffers(1, &VBO_colors);
   glBindBuffer(GL_ARRAY_BUFFER, VBO_colors);
-  // glBufferData(GL_ARRAY_BUFFER, sizeof(object_rbg), object_rgb,
-  //              GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, object_rgb.size() * sizeof(float),
+               object_rgb.data(), GL_STATIC_DRAW);
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-  // glEnableVertexAttribArray(1); // tell shader to turn on location 1
-  // attribute
+  glEnableVertexAttribArray(1); // tell shader to turn on location 1 attribute
 
   unsigned int mvpLocation = glGetUniformLocation(shaderProgram, "uMVP");
 
