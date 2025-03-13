@@ -4,6 +4,8 @@
 #pragma once
 
 #include "Enums.h"
+#include <cmath>
+#include <vector>
 
 class Cell {
 private:
@@ -18,11 +20,16 @@ private:
 public:
   // Cell(int i, int j) : i(i), j(j) {}
 
+  void setCellCoords(int i, int j)
+  {
+    this->i = i;
+    this->j = j;
+  }
   int getCell_x() const { return j; }
   int getCell_y() const { return i; }
   bool isWalled(Direction d) { return walls[static_cast<int>(d)]; }
 
   void link(Direction d, Cell *neighbor, bool bidirectional = true);
   void unlink(Direction d, Cell *neighbor, bool bidirectional = true);
-  void buildGeometry();
+  void buildGeometry(std::vector<float> &vertices);
 };

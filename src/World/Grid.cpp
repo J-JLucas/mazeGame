@@ -55,9 +55,10 @@ void Grid::printGridToConsole()
 std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
 {
   // top left corner is (0, 0)
-  // bottom right corner is (n, m)
+  // bottom right corner is (x = n, y = m)
   // each cell is a square of size scale
   std::vector<float> vertices;
+
   for (int i = 0; i < m; i++) {
     for (int j = 0; j < n; j++) {
       Cell *cell = &cells[i][j];
@@ -65,35 +66,43 @@ std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
         continue;
       }
 
-      /* FLOOR - 2 tri's, 4 vertices (2 shared) */
-      // first triangle
-      // v1
-      vertices.push_back(j); // x
-      vertices.push_back(0); // y is vertical in opengl
-      vertices.push_back(i); // z
-      // v2
-      vertices.push_back(j + 1);
-      vertices.push_back(0);
-      vertices.push_back(i);
-      // v3
-      vertices.push_back(j); // x
-      vertices.push_back(0);
-      vertices.push_back(i + 1);
-
-      // second triangle
-      // v4
-      vertices.push_back(j + 1);
-      vertices.push_back(0);
-      vertices.push_back(i + 1);
-      // v3
-      vertices.push_back(j);
-      vertices.push_back(0);
-      vertices.push_back(i + 1);
-      // v2
-      vertices.push_back(j + 1);
-      vertices.push_back(0);
-      vertices.push_back(i);
+      cell->setCellCoords(i, j);
+      cell->buildGeometry(vertices);
     }
   }
+  // could generate entire floor as 2 triangles?
+  /*
+  vertices.push_back(0);
+  vertices.push_back(0);
+  vertices.push_back(0);
+
+  vertices.push_back(n);
+  vertices.push_back(0);
+  vertices.push_back(0);
+
+  vertices.push_back(0);
+  vertices.push_back(0);
+  vertices.push_back(m);
+
+  vertices.push_back(n);
+  vertices.push_back(0);
+  vertices.push_back(m);
+
+  vertices.push_back(n);
+  vertices.push_back(0);
+  vertices.push_back(0);
+
+  vertices.push_back(0);
+  vertices.push_back(0);
+  vertices.push_back(m);
+  */
+
+  for (int i = 0; i < vertices.size(); i += 3) {
+    {
+      std::cout << "(" << vertices[i] << " " << vertices[i + 1] << " "
+                << vertices[i + 2] << ")" << std::endl;
+    }
+  }
+
   return vertices;
 }
