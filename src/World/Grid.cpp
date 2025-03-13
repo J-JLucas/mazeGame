@@ -70,7 +70,7 @@ std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
       cell->buildGeometry(vertices);
     }
   }
-  // could generate entire floor as 2 triangles?
+  // could generate entire ceiling as 2 triangles?
   /*
   vertices.push_back(0);
   vertices.push_back(0);

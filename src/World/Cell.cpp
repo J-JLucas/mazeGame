@@ -24,14 +24,6 @@ void Cell::unlink(Direction d, Cell *neighbor, bool bidirectional)
 
 void Cell::buildGeometry(std::vector<float> &vertices)
 {
-
-  /* FLOOR - 2 tri's, 4 vertices (2 shared) */
-  // first triangle
-
-  //   N
-  // W   E
-  //   S
-
   // ** FLOOR - 2 tri's, 4 vertices (2 shared) **
   // first triangle
   // v1
@@ -88,4 +80,64 @@ void Cell::buildGeometry(std::vector<float> &vertices)
   vertices.push_back(0.0f);
   vertices.push_back(0.7f);
   vertices.push_back(0.35f);
+
+  // ** WALLS - 2 tri's, 4 vertices (2 shared) **
+  // if northern most cell, draw north wall
+  // if (i == 0) {
+  // first triangle
+  // v1
+  vertices.push_back(j);
+  vertices.push_back(0);
+  vertices.push_back(i);
+  // c1
+  vertices.push_back(1.0f);
+  vertices.push_back(0.0f);
+  vertices.push_back(0.0f);
+  //
+  // v2
+  vertices.push_back(j + 1);
+  vertices.push_back(0);
+  vertices.push_back(i);
+  // c2
+  vertices.push_back(0.0f);
+  vertices.push_back(1.0f);
+  vertices.push_back(0.0f);
+
+  // v3
+  vertices.push_back(j);
+  vertices.push_back(1);
+  vertices.push_back(i);
+  // c3
+  vertices.push_back(0.0f);
+  vertices.push_back(0.0f);
+  vertices.push_back(1.0f);
+
+  // second triangle
+  // v3
+  vertices.push_back(j);
+  vertices.push_back(1);
+  vertices.push_back(i);
+  // c3
+  vertices.push_back(1.0f);
+  vertices.push_back(0.0f);
+  vertices.push_back(0.0f);
+
+  // v4
+  vertices.push_back(j + 1);
+  vertices.push_back(1);
+  vertices.push_back(i);
+  // c4
+  vertices.push_back(0.0f);
+  vertices.push_back(1.0f);
+  vertices.push_back(0.0f);
+
+  // v2
+  vertices.push_back(j + 1);
+  vertices.push_back(0);
+  vertices.push_back(i);
+  // c2
+  vertices.push_back(0.0f);
+  vertices.push_back(0.0f);
+  vertices.push_back(1.0f);
+  //  }
 }

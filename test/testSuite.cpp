@@ -104,8 +104,8 @@ int main(int argc, char *argv[])
     glm::mat4 model = glm::mat4(1.0f);
 
     // Set up the camera to center on the floor plane using glm::lookAt
-    glm::vec3 cameraPos = glm::vec3(2.0f, 2.0f, 2.0f);
-    glm::vec3 cameraTarget = glm::vec3(2.0f, 0.0f, 4.5f);
+    glm::vec3 cameraPos = glm::vec3(8.5f, 2.5f, 4.5f);
+    glm::vec3 cameraTarget = glm::vec3(5.0f, 0.0f, 5.0f);
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, up);
 
