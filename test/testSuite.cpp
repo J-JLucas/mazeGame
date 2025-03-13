@@ -49,11 +49,13 @@ int main(int argc, char *argv[])
   std::vector<float> object_vertices = testWorldGeneration();
   std::vector<float> object_rgb;
 
+  /*
   for (int i = 0; i < object_vertices.size(); i += 3) {
     object_rgb.push_back(0.0f);
     object_rgb.push_back(0.7f);
     object_rgb.push_back(0.35f);
   }
+  */
 
   // 1)
   // Vertex Array Object (VAO)
@@ -74,15 +76,16 @@ int main(int argc, char *argv[])
 
   // 3)
   // tell OpenGL how to interpret vertex data
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
   glEnableVertexAttribArray(0); // tell shader to turn on location 0 attribute
 
-  unsigned int VBO_colors;
-  glGenBuffers(1, &VBO_colors);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO_colors);
-  glBufferData(GL_ARRAY_BUFFER, object_rgb.size() * sizeof(float),
-               object_rgb.data(), GL_STATIC_DRAW);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+  // unsigned int VBO_colors;
+  // glGenBuffers(1, &VBO_colors);
+  // glBindBuffer(GL_ARRAY_BUFFER, VBO_colors);
+  // glBufferData(GL_ARRAY_BUFFER, object_vertices.size() * sizeof(float),
+  //              object_vertices.data(), GL_STATIC_DRAW);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
+                        (void *)(3 * sizeof(float)));
   glEnableVertexAttribArray(1); // tell shader to turn on location 1 attribute
 
   unsigned int mvpLocation = glGetUniformLocation(shaderProgram, "uMVP");
@@ -93,7 +96,6 @@ int main(int argc, char *argv[])
 
   // Main Render Loop
   while (!glfwWindowShouldClose(window)) {
-
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
       glfwSetWindowShouldClose(window, true);
     }

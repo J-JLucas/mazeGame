@@ -38,26 +38,54 @@ void Cell::buildGeometry(std::vector<float> &vertices)
   vertices.push_back(j); // x
   vertices.push_back(0); // y is vertical in opengl
   vertices.push_back(i); // z
+  // c1
+  vertices.push_back(0.0f);
+  vertices.push_back(0.7f);
+  vertices.push_back(0.35f);
+
   // v2
   vertices.push_back(j + 1);
   vertices.push_back(0);
   vertices.push_back(i);
+  // c2
+  vertices.push_back(0.0f);
+  vertices.push_back(0.7f);
+  vertices.push_back(0.35f);
+
   // v3
   vertices.push_back(j); // x
   vertices.push_back(0);
   vertices.push_back(i + 1);
+  // c3
+  vertices.push_back(0.0f);
+  vertices.push_back(0.7f);
+  vertices.push_back(0.35f);
 
   // second triangle
   // v4
   vertices.push_back(j + 1);
   vertices.push_back(0);
   vertices.push_back(i + 1);
+  // c4
+  vertices.push_back(0.0f);
+  vertices.push_back(0.7f);
+  vertices.push_back(0.35f);
+
   // v3
   vertices.push_back(j);
   vertices.push_back(0);
   vertices.push_back(i + 1);
+  // c3
+  vertices.push_back(0.0f);
+  vertices.push_back(0.7f);
+  vertices.push_back(0.35f);
+
   // v2
   vertices.push_back(j + 1);
   vertices.push_back(0);
   vertices.push_back(i);
+  // c2
+  vertices.push_back(0.0f);
+  vertices.push_back(0.7f);
+  vertices.push_back(0.35f);
 }
