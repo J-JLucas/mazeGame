@@ -1,8 +1,9 @@
 #version 330 core
+in vec3 vColor;
 out vec4 FragColor;
 
-// fragment shaders are all about calculating the output colour (r,g,b,a) of our pixels
 void main()
 {
-  FragColor = vec4(0.98f, 0.012f, 0.31f, 1.0f);  // hardcoded to fuchsia
+    // A simple color for the cube
+    FragColor = vec4(vColor, 1.0);
 }
