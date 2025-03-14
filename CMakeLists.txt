@@ -29,7 +29,9 @@ include_directories(
 
 # Create executable
 #add_executable(mazeGame main.cpp)
-add_executable(testSuite test/testSuite.cpp test/testWorldGen.cpp src/World/BinaryTreeMaze.cpp src/World/Cell.cpp src/World/Grid.cpp src/World/World.cpp)
+add_executable(testSuite test/testSuite.cpp test/testWorldGen.cpp
+  src/World/BinaryTreeMaze.cpp src/World/Cell.cpp src/World/Grid.cpp
+  src/World/World.cpp src/Player.cpp)
 
 # Link libraries
 #target_link_libraries(mazeGame

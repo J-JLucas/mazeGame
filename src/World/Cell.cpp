@@ -92,7 +92,7 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(0);
     vertices.push_back(i);
     // c1
-    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     //
@@ -102,7 +102,7 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(i);
     // c2
     vertices.push_back(0.0f);
-    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
     // v3
@@ -110,9 +110,9 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(1);
     vertices.push_back(i);
     // c3
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
     vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
 
     // second triangle
     // v3
@@ -120,7 +120,7 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(1);
     vertices.push_back(i);
     // c3
-    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
@@ -130,7 +130,7 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(i);
     // c4
     vertices.push_back(0.0f);
-    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
     // v2
@@ -138,12 +138,12 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(0);
     vertices.push_back(i);
     // c2
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
     vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
   }
 
-  // if EASTERN MOST CELL, draw east wall
+  // if WESTERN MOST CELL, draw east wall
   if (j == 0) {
     // first triangle
     // v1
@@ -151,7 +151,7 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(0);
     vertices.push_back(i);
     // c1
-    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
@@ -161,7 +161,7 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(i + 1);
     // c2
     vertices.push_back(0.0f);
-    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
     // v3
@@ -179,7 +179,7 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(1);
     vertices.push_back(i);
     // c3
-    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
@@ -189,7 +189,7 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(i + 1);
     // c4
     vertices.push_back(0.0f);
-    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
     // v2
