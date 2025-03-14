@@ -10,8 +10,8 @@ int main()
 
   /* SHADERS */
   // Load shader source files
-  std::string vertexShaderSource = loadShaderSource("../shaders/cube.vert");
-  std::string fragmentShaderSource = loadShaderSource("../shaders/cube.frag");
+  std::string vertexShaderSource = loadShaderSource("../shaders/basic.vert");
+  std::string fragmentShaderSource = loadShaderSource("../shaders/basic.frag");
   const char *vertexShaderSourceC = vertexShaderSource.c_str();
   const char *fragmentShaderSourceC = fragmentShaderSource.c_str();
 

@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
   }
 
   // SHADERS
-  std::string vertexShaderSource = loadShaderSource("../shaders/cube.vert");
-  std::string fragmentShaderSource = loadShaderSource("../shaders/cube.frag");
+  std::string vertexShaderSource = loadShaderSource("../shaders/basic.vert");
+  std::string fragmentShaderSource = loadShaderSource("../shaders/basic.frag");
   const char *vertexShaderSourceC = vertexShaderSource.c_str();
   const char *fragmentShaderSourceC = fragmentShaderSource.c_str();
 
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
     glm::vec3 cameraPos = player.getPosition();
     glm::vec3 cameraDirection = player.getForwardVector();
-    glm::vec3 worldUp = player.getUpVector();
+    glm::vec3 up = player.getUpVector();
     glm::vec3 right = player.getRightVector();
 
     std::cout << std::fixed << std::setprecision(2);
@@ -116,8 +116,7 @@ int main(int argc, char *argv[])
       player.move(GLFW_KEY_RIGHT, deltaTime);
 
     // Compute the view matrix using the updated camera position
-    glm::mat4 view =
-        glm::lookAt(cameraPos, cameraPos + cameraDirection, worldUp);
+    glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraDirection, up);
     glm::mat4 projection =
         glm::perspective(glm::radians(fov), aspect, 0.1f, 100.0f);
     glm::mat4 model = glm::mat4(1.0f);
