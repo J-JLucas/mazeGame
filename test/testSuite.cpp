@@ -1,13 +1,11 @@
 
 #include <iomanip>
-#define GLM_ENABLE_EXPERIMENTAL
 
 #include "../src/common.h"
 #include "testWorldGen.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <glm/gtx/rotate_vector.hpp>
 #include <glm/trigonometric.hpp>
 #include <vector>
 
@@ -48,7 +46,6 @@ int main(int argc, char *argv[])
 
   // Get geometry from world generation
   std::vector<float> object_vertices = testWorldGeneration();
-  Player player = Player(glm::vec3(0.5f, 0.5f, -3.0f));
 
   // Vertex Array Object (VAO)
   unsigned int VAO;
@@ -76,27 +73,7 @@ int main(int argc, char *argv[])
   float fov = 90.0f;
   float aspect = static_cast<float>(w) / static_cast<float>(h);
 
-  // Set up initial camera parameters
-
-  // glm::vec3 cameraPos(0.5f, 0.5f, -3.0f);
-  glm::vec3 cameraPos = player.getPosition();
-  // glm::vec3 cameraTarget = cameraPos + glm::vec3(0.0f, 0.0f, 1.0f);
-
-  // glm::vec3 cameraTarget(0.0f, 0.5f, 0.0f);
-  // Calculate fixed forward (view) direction
-  // glm::vec3 cameraDirection = glm::normalize(cameraTarget - cameraPos);
-  glm::vec3 cameraDirection = player.getForwardVector();
-
-  glm::vec3 worldUp = player.getUpVector();
-  // glm::vec3 right = glm::normalize(glm::cross(cameraDirection, worldUp));
-  glm::vec3 right = player.getRightVector();
-
-  /*
-  glm::vec3 cameraPos = player.getPosition();
-  glm::vec3 cameraDirection = player.getForwardVector();
-  glm::vec3 worldUp = player.getUpVector();
-  glm::vec3 right = player.getRightVector();
-*/
+  Player player = Player(glm::vec3(0.5f, 0.5f, 0.5f));
 
   // Timing for smooth movement
   float lastFrameTime = glfwGetTime();
@@ -110,37 +87,33 @@ int main(int argc, char *argv[])
       glfwSetWindowShouldClose(window, true);
     }
 
-    std::cout << std::fixed << std::setprecision(2);
-    std::cout << "Position: (" << cameraPos.x << ", " << cameraPos.y << ", "
-              << cameraPos.z << ")" << std::endl;
-
     // Compute delta time
     float currentFrameTime = glfwGetTime();
     float deltaTime = currentFrameTime - lastFrameTime;
     lastFrameTime = currentFrameTime;
 
+    glm::vec3 cameraPos = player.getPosition();
+    glm::vec3 cameraDirection = player.getForwardVector();
+    glm::vec3 worldUp = player.getUpVector();
+    glm::vec3 right = player.getRightVector();
+
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "Position: (" << cameraPos.x << ", " << cameraPos.y << ", "
+              << cameraPos.z << ")" << std::endl;
+
     // Handle keyboard input for movement
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-      cameraPos += cameraDirection * movementSpeed * deltaTime;
+      player.move(GLFW_KEY_W, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-      cameraPos -= cameraDirection * movementSpeed * deltaTime;
+      player.move(GLFW_KEY_S, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-      cameraPos -= right * movementSpeed * deltaTime;
+      player.move(GLFW_KEY_A, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-      cameraPos += right * movementSpeed * deltaTime;
-
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-      // Rotate left (counterclockwise around worldUp)
-      cameraDirection = glm::rotate(
-          cameraDirection, glm::radians(rotationSpeed * deltaTime), worldUp);
-      right = glm::normalize(glm::cross(cameraDirection, worldUp));
-    }
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-      // Rotate right (clockwise around worldUp)
-      cameraDirection = glm::rotate(
-          cameraDirection, glm::radians(-rotationSpeed * deltaTime), worldUp);
-      right = glm::normalize(glm::cross(cameraDirection, worldUp));
-    }
+      player.move(GLFW_KEY_D, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+      player.move(GLFW_KEY_LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+      player.move(GLFW_KEY_RIGHT, deltaTime);
 
     // Compute the view matrix using the updated camera position
     glm::mat4 view =
@@ -159,26 +132,6 @@ int main(int argc, char *argv[])
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, object_vertices.size() / 3);
     glBindVertexArray(0);
-
-    // Set the desired line thickness (e.g., 5.0 pixels)
-    glLineWidth(5.0f);
-    // Begin drawing lines
-    glBegin(GL_LINES);
-    // X-axis in red
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(10.0f, 0.0f, 0.0f);
-
-    // Y-axis in green
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(0.0f, 10.0f, 0.0f);
-
-    // Z-axis in blue
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, 10.0f);
-    glEnd();
 
     // Swap buffers and poll events
     glfwSwapBuffers(window);

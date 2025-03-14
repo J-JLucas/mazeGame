@@ -1,39 +1,35 @@
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include "Player.h"
-#include <utility>
+#include <GLFW/glfw3.h>
+#include <glm/gtx/rotate_vector.hpp>
 
-/*
-void Player::bindInput(GLFWwindow *window)
+void Player::move(int GLFW_KEY, float deltaTime)
 {
-  glfwSetKeyCallback(window, handleInput);
-}
-*/
+  float velocity = speed * deltaTime;
+  float rotationSpeed = 160.0f;
 
-void Player::handleInput(GLFWwindow *window, int key, int scancode, int action,
-                         int mods)
-{
-  //
-  // Handle keyboard input for movement
-  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-    position += forward_vector * speed; // * deltaTime;
-  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-    position -= forward_vector * speed; // * deltaTime;
-  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-    position -= right_vector * speed; // * deltaTime;
-  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-    position += right_vector * speed; // * deltaTime;
-
-  /*
-  if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-    // Rotate left (counterclockwise around worldUp)
+  if (GLFW_KEY == GLFW_KEY_W) {
+    position += getForwardVector() * velocity;
+  }
+  else if (GLFW_KEY == GLFW_KEY_S) {
+    position -= getForwardVector() * velocity;
+  }
+  else if (GLFW_KEY == GLFW_KEY_A) {
+    position -= getRightVector() * velocity;
+  }
+  else if (GLFW_KEY == GLFW_KEY_D) {
+    position += getRightVector() * velocity;
+  }
+  else if (GLFW_KEY == GLFW_KEY_LEFT) {
     forward_vector = glm::rotate(
-        cameraDirection, glm::radians(rotationSpeed * deltaTime), worldUp);
-    right = glm::normalize(glm::cross(cameraDirection, worldUp));
+        forward_vector, glm::radians(rotationSpeed * deltaTime), getUpVector());
+    right_vector = getRightVector();
   }
-  if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-    // Rotate right (clockwise around worldUp)
-    cameraDirection = glm::rotate(
-        cameraDirection, glm::radians(-rotationSpeed * deltaTime), worldUp);
-    right = glm::normalize(glm::cross(cameraDirection, worldUp));
+  else if (GLFW_KEY == GLFW_KEY_RIGHT) {
+    forward_vector =
+        glm::rotate(forward_vector, glm::radians(-rotationSpeed * deltaTime),
+                    getUpVector());
+    right_vector = getRightVector();
   }
-  */
 }

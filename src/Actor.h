@@ -16,7 +16,7 @@ protected:
 public:
   Actor(glm::vec3 startPosition) : position(startPosition)
   {
-    forward_vector = getForwardVector();
+    forward_vector = glm::vec3(0.0f, 0.0f, 1.0f);
     up_vector = glm::vec3(0.0f, 1.0f, 0.0f);
     right_vector = getRightVector();
   }
@@ -24,7 +24,7 @@ public:
   glm::vec3 getPosition() { return position; }
 
   // forward vector changes by rotatation about the y-axis
-  glm::vec3 getForwardVector() { return glm::vec3(0.0f, 0.0f, 1.0f); }
+  glm::vec3 getForwardVector() { return forward_vector; }
 
   // player can't tilt up or down, should remain constant
   glm::vec3 getUpVector() { return up_vector; }
