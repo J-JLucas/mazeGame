@@ -1,6 +1,7 @@
 #include "Grid.h"
 #include "Cell.h"
 #include "Enums.h"
+#include <glm/glm.hpp>
 #include <iostream>
 #include <vector>
 /* Grid */
@@ -52,7 +53,7 @@ void Grid::printGridToConsole()
   }
 }
 
-std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
+std::vector<float> Grid::buildMazeGeometry()
 {
   // top left corner is (0, 0)
   // bottom right corner is (x = n, y = m)
@@ -96,15 +97,5 @@ std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
   vertices.push_back(0);
   vertices.push_back(m);
   */
-
-  /*
-  for (int i = 0; i < vertices.size(); i += 3) {
-    {
-      std::cout << "(" << vertices[i] << " " << vertices[i + 1] << " "
-                << vertices[i + 2] << ")" << std::endl;
-    }
-  }
-  */
-
   return vertices;
 }

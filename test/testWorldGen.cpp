@@ -10,7 +10,7 @@ std::vector<float> testWorldGeneration()
   Grid map;
   BinaryTreeMaze::generateMaze(map);
   map.printGridToConsole();
-  std::vector<float> verts = map.buildMazeGeometry(100);
+  std::vector<float> verts = map.buildMazeGeometry();
 
   std::cout << "World Generation Test Passed." << std::endl;
 

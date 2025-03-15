@@ -1,8 +1,8 @@
 
 #include <iomanip>
 
+#include "../src/World/World.h"
 #include "../src/common.h"
-#include "testWorldGen.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -44,8 +44,9 @@ int main(int argc, char *argv[])
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
 
-  // Get geometry from world generation
-  std::vector<float> object_vertices = testWorldGeneration();
+  World world;
+  Player player = Player(&world, glm::vec3(0.5f, 0.5f, 0.5f));
+  std::vector<float> object_vertices = world.generateWorld();
 
   // Vertex Array Object (VAO)
   unsigned int VAO;
@@ -72,9 +73,7 @@ int main(int argc, char *argv[])
   // Setup projection parameters
   float fov = 90.0f;
   float aspect = static_cast<float>(w) / static_cast<float>(h);
-
-  Player player = Player(glm::vec3(0.5f, 0.5f, 0.5f));
-
+  //
   // Timing for smooth movement
   float lastFrameTime = glfwGetTime();
   float movementSpeed = 3.0f; // units per second
