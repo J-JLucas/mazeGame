@@ -30,7 +30,7 @@ include_directories(
 # Create executable
 #add_executable(mazeGame main.cpp)
 add_executable(testSuite test/testSuite.cpp
-  src/World/SidewinderMaze.cpp src/World/Cell.cpp src/World/Grid.cpp
+  src/World/mazeAlgies/SidewinderMaze.cpp src/World/Cell.cpp src/World/Grid.cpp
   src/World/World.cpp src/Player.cpp)
 
 # Link libraries

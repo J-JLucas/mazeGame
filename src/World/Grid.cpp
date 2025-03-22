@@ -1,9 +1,23 @@
 #include "Grid.h"
+#include "../common.h"
 #include "Cell.h"
 #include "Enums.h"
 #include <iostream>
 #include <vector>
+
 /* Grid */
+Grid::Grid()
+{
+  for (int i = 0; i < m; i++) {
+    for (int j = 0; j < n; j++) {
+      cells[i][j].setCellCoords(i, j);
+    }
+  }
+
+  exitCell = getRandomCell();
+  std::cout << "Exit cell: " << exitCell->getCell_x() << ", "
+            << exitCell->getCell_y() << std::endl;
+}
 
 // Access operator for cell object pointer at row, column
 Cell *Grid::operator()(int row, int column)
@@ -50,6 +64,15 @@ void Grid::printGridToConsole()
     // print the wall row strings
     std::cout << top << "\n" << bottom << std::endl;
   }
+}
+
+Cell *Grid::getRandomCell()
+{
+
+  RNG rngEngine(1337);
+  int row = rngEngine.getRandInt() % m;
+  int col = rngEngine.getRandInt() % n;
+  return &cells[row][col];
 }
 
 std::vector<float> Grid::buildMazeGeometry(std::vector<AABB *> &collisionBoxes)

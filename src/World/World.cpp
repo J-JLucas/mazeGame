@@ -1,7 +1,7 @@
 #include "World.h"
 #include "../Player.h"
-// #include "BinaryTreeMaze.h"
-#include "SidewinderMaze.h"
+// #include "mazeAlgies/BinaryTreeMaze.h"
+#include "mazeAlgies/SidewinderMaze.h"
 #include <glm/ext/vector_float3.hpp>
 #include <iomanip>
 #include <iostream>

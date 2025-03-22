@@ -1,8 +1,8 @@
 #include "BinaryTreeMaze.h"
-#include "../common.h"
-#include "Cell.h"
-#include "Enums.h"
-#include "Grid.h"
+#include "../../common.h"
+#include "../Cell.h"
+#include "../Enums.h"
+#include "../Grid.h"
 
 /* Binary Tree Maze Generation Algie
  * We're going to step through each cell in the grid 1 by 1

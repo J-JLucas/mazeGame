@@ -1,8 +1,8 @@
 #include "SidewinderMaze.h"
-#include "../common.h"
-#include "Cell.h"
-#include "Enums.h"
-#include "Grid.h"
+#include "../../common.h"
+#include "../Cell.h"
+#include "../Enums.h"
+#include "../Grid.h"
 #include <vector>
 
 /* Sidewinder Maze Generation Algie
