@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AABB.h"
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include <glm/glm.hpp>
@@ -12,9 +13,14 @@ protected:
   glm::vec3 forward_vector;
   glm::vec3 right_vector;
   glm::vec3 up_vector;
+  AABB bounding_box;
+  float scale;
 
 public:
-  Actor(glm::vec3 startPosition) : position(startPosition)
+  Actor(glm::vec3 startPosition, float scale)
+      : position(startPosition), scale(scale),
+        bounding_box(startPosition - glm::vec3(scale),
+                     startPosition + glm::vec3(scale))
   {
     forward_vector = glm::vec3(0.0f, 0.0f, 1.0f);
     up_vector = glm::vec3(0.0f, 1.0f, 0.0f);

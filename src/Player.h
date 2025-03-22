@@ -10,12 +10,13 @@ private:
   class World *world;
 
 public:
-  Player(World *world, glm::vec3 startPosition)
-      : world(world), Actor(startPosition)
+  Player(World *world, glm::vec3 startPosition, float scale)
+      : world(world), Actor(startPosition, scale)
   {
-    speed = 2.0f;
+    speed = 2.5f;
   }
   void setSpeed(unsigned int speed);
   float getSpeed();
   void move(int GLFW_KEY, float deltaTime);
+  void updateBoundingBox();
 };

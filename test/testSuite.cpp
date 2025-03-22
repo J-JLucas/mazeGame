@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
   glDeleteShader(fragmentShader);
 
   World world;
-  Player player = Player(&world, glm::vec3(0.5f, 0.5f, 0.5f));
+  Player player = Player(&world, glm::vec3(0.5f, 0.5f, 0.5f), 0.2f);
   std::vector<float> object_vertices = world.generateWorld();
 
   // Vertex Array Object (VAO)
@@ -96,9 +96,7 @@ int main(int argc, char *argv[])
     glm::vec3 up = player.getUpVector();
     glm::vec3 right = player.getRightVector();
 
-    std::cout << std::fixed << std::setprecision(2);
-    std::cout << "Position: (" << cameraPos.x << ", " << cameraPos.y << ", "
-              << cameraPos.z << ")" << std::endl;
+    // world.printDebugPosition(&player);
 
     // Handle keyboard input for movement
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)

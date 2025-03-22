@@ -3,7 +3,6 @@
  */
 #pragma once
 
-#include "CollisionBox.h"
 #include "Enums.h"
 #include <cmath>
 #include <vector>
@@ -12,12 +11,11 @@ class Cell {
 private:
   // cell coords
   int i, j;
-  float collisionWidth = .2f;
+  float collisionWidth = .1f;
   // used to determine if a wall exists in that direction from center of cell
   // default state walls are closed, generation algies will carve out openings
   // 0 = opening, 1 = wall
   bool walls[4] = {true, true, true, true};
-  CollisionBox *wallCollision[4] = {nullptr, nullptr, nullptr, nullptr};
 
 public:
   ~Cell();
@@ -30,6 +28,7 @@ public:
   int getCell_x() const { return j; }
   int getCell_y() const { return i; }
   bool isWalled(Direction d) { return walls[static_cast<int>(d)]; }
+  class AABB *wallCollision[4] = {nullptr, nullptr, nullptr, nullptr};
 
   void link(Direction d, Cell *neighbor, bool bidirectional = true);
   void unlink(Direction d, Cell *neighbor, bool bidirectional = true);
