@@ -1,6 +1,7 @@
 #include "World.h"
 #include "../Player.h"
-#include "BinaryTreeMaze.h"
+// #include "BinaryTreeMaze.h"
+#include "SidewinderMaze.h"
 #include <glm/ext/vector_float3.hpp>
 #include <iomanip>
 #include <iostream>
@@ -9,7 +10,8 @@
 std::vector<float> World::generateWorld()
 {
   // Carve out the maze in the gridmap
-  BinaryTreeMaze::generateMaze(gridMap);
+  // BinaryTreeMaze::generateMaze(gridMap);
+  SidewinderMaze::generateMaze(gridMap);
   gridMap.printGridToConsole();
 
   // Generate Maze 3D Geometry
