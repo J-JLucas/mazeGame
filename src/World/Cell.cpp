@@ -1,4 +1,5 @@
 #include "Cell.h"
+#include "../AABB.h"
 #include "Enums.h"
 
 /* Cell */
@@ -85,6 +86,10 @@ void Cell::buildGeometry(std::vector<float> &vertices)
 
   // if NORTHERN MOST CELL, draw north wall
   if (i == 0) {
+    // Add collision box for north wall
+    wallCollision[static_cast<int>(Direction::NORTH)] =
+        new AABB(glm::vec3(j, 0, i - collisionWidth),
+                 glm::vec3(j + 1, 0, i + collisionWidth));
 
     // first triangle
     // v1
@@ -145,6 +150,12 @@ void Cell::buildGeometry(std::vector<float> &vertices)
 
   // if WESTERN MOST CELL, draw east wall
   if (j == 0) {
+    // Add collision box for west wall
+
+    wallCollision[static_cast<int>(Direction::WEST)] =
+        new AABB(glm::vec3(j - collisionWidth, 0, i),
+                 glm::vec3(j + collisionWidth, 0, i + 1));
+
     // first triangle
     // v1
     vertices.push_back(j);
@@ -203,6 +214,11 @@ void Cell::buildGeometry(std::vector<float> &vertices)
   }
 
   if (this->isWalled(Direction::EAST)) {
+    // Add collision box for east wall
+    wallCollision[static_cast<int>(Direction::EAST)] =
+        new AABB(glm::vec3(j + 1 - collisionWidth, 0, i),
+                 glm::vec3(j + 1 + collisionWidth, 0, i + 1));
+
     // first triangle
     // v1
     vertices.push_back(j + 1);
@@ -260,6 +276,11 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(1.0f);
   }
   if (this->isWalled(Direction::SOUTH)) {
+    // Add collision box for south wall
+    wallCollision[static_cast<int>(Direction::SOUTH)] =
+        new AABB(glm::vec3(j, 0, i + 1 - collisionWidth),
+                 glm::vec3(j + 1, 0, i + 1 + collisionWidth));
+
     // first triangle
     // v1
     vertices.push_back(j);
@@ -315,5 +336,14 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     vertices.push_back(1.0f);
+  }
+}
+
+Cell::~Cell()
+{
+  for (int i = 0; i < 4; i++) {
+    if (wallCollision[i] != nullptr) {
+      delete wallCollision[i];
+    }
   }
 }

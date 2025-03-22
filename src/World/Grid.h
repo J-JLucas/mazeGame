@@ -17,5 +17,5 @@ public:
   int getNumRows() { return m; }
   int getNumCols() { return n; }
   void printGridToConsole();
-  std::vector<float> buildMazeGeometry(unsigned int scaleFactor);
+  std::vector<float> buildMazeGeometry(std::vector<AABB *> &collisionBoxes);
 };

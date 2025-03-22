@@ -7,10 +7,16 @@
 class Player : public Actor {
 private:
   float speed;
+  class World *world;
 
 public:
-  Player(glm::vec3 startPosition) : Actor(startPosition) { speed = 3.0f; }
+  Player(World *world, glm::vec3 startPosition, float scale)
+      : world(world), Actor(startPosition, scale)
+  {
+    speed = 2.5f;
+  }
   void setSpeed(unsigned int speed);
   float getSpeed();
   void move(int GLFW_KEY, float deltaTime);
+  void updateBoundingBox();
 };

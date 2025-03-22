@@ -52,7 +52,7 @@ void Grid::printGridToConsole()
   }
 }
 
-std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
+std::vector<float> Grid::buildMazeGeometry(std::vector<AABB *> &collisionBoxes)
 {
   // top left corner is (0, 0)
   // bottom right corner is (x = n, y = m)
@@ -68,6 +68,11 @@ std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
 
       cell->setCellCoords(i, j);
       cell->buildGeometry(vertices);
+      for (int k = 0; k < 4; k++) {
+        if (cell->wallCollision[k]) {
+          collisionBoxes.push_back(cell->wallCollision[k]);
+        }
+      }
     }
   }
   // could generate entire ceiling as 2 triangles?
@@ -96,15 +101,5 @@ std::vector<float> Grid::buildMazeGeometry(unsigned int scale)
   vertices.push_back(0);
   vertices.push_back(m);
   */
-
-  /*
-  for (int i = 0; i < vertices.size(); i += 3) {
-    {
-      std::cout << "(" << vertices[i] << " " << vertices[i + 1] << " "
-                << vertices[i + 2] << ")" << std::endl;
-    }
-  }
-  */
-
   return vertices;
 }
