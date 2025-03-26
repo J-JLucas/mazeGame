@@ -38,11 +38,12 @@ public:
   {
     if (max.x < other.min.x || min.x > other.max.x)
       return false;
+    /*
     std::cout << "Intersects x axis" << std::endl;
     std::cout << "min.x: " << min.x << " max.x: " << max.x
               << " other.min.x: " << other.min.x
               << " other.max.x: " << other.max.x << std::endl;
-
+    */
     return true;
   }
 
@@ -59,11 +60,12 @@ public:
     if (max.z < other.min.z || min.z > other.max.z)
       return false;
 
+    /*
     std::cout << "Intersects z axis" << std::endl;
     std::cout << "min.z: " << min.z << " max.z: " << max.z
               << " other.min.z: " << other.min.z
               << " other.max.z: " << other.max.z << std::endl;
-
+    */
     return true;
   }
   bool intersects(const AABB &other) const

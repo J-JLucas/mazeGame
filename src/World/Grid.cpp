@@ -1,10 +1,12 @@
 #include "Grid.h"
-#include "../common.h"
+#include "../AABB.h"
+#include "../Player.h"
+#include "../RNG.h"
 #include "Cell.h"
 #include "Enums.h"
+#include <glm/ext/vector_float3.hpp>
 #include <iostream>
 #include <vector>
-
 /* Grid */
 Grid::Grid()
 {
@@ -13,11 +15,9 @@ Grid::Grid()
       cells[i][j].setCellCoords(i, j);
     }
   }
-
-  exitCell = getRandomCell();
-  std::cout << "Exit cell: " << exitCell->getCell_x() << ", "
-            << exitCell->getCell_y() << std::endl;
 }
+
+Grid::~Grid() { delete exitBox; }
 
 // Access operator for cell object pointer at row, column
 Cell *Grid::operator()(int row, int column)
@@ -75,6 +75,29 @@ Cell *Grid::getRandomCell()
   return &cells[row][col];
 }
 
+void Grid::initEntranceExit()
+{
+  entranceCell = getRandomCell();
+  exitCell = getRandomCell();
+  while (entranceCell == exitCell) {
+    exitCell = getRandomCell();
+  }
+
+  exitBox = new AABB(
+      glm::vec3(exitCell->getCell_x() + 0.2f, 0, exitCell->getCell_y() + 0.2f),
+      glm::vec3(exitCell->getCell_x() + 0.8f, 1, exitCell->getCell_y() + 0.8f));
+
+  std::cout << "Entrance cell: " << entranceCell->getCell_x() << ", "
+            << entranceCell->getCell_y() << std::endl;
+  std::cout << "Exit cell: " << exitCell->getCell_x() << ", "
+            << exitCell->getCell_y() << std::endl;
+}
+
+bool Grid::isIntersectExit(Player *player)
+{
+  return exitBox->intersects(*(player->getCollisionBox()));
+}
+
 std::vector<float> Grid::buildMazeGeometry(std::vector<AABB *> &collisionBoxes)
 {
   // top left corner is (0, 0)
@@ -98,31 +121,5 @@ std::vector<float> Grid::buildMazeGeometry(std::vector<AABB *> &collisionBoxes)
       }
     }
   }
-  // could generate entire ceiling as 2 triangles?
-  /*
-  vertices.push_back(0);
-  vertices.push_back(0);
-  vertices.push_back(0);
-
-  vertices.push_back(n);
-  vertices.push_back(0);
-  vertices.push_back(0);
-
-  vertices.push_back(0);
-  vertices.push_back(0);
-  vertices.push_back(m);
-
-  vertices.push_back(n);
-  vertices.push_back(0);
-  vertices.push_back(m);
-
-  vertices.push_back(n);
-  vertices.push_back(0);
-  vertices.push_back(0);
-
-  vertices.push_back(0);
-  vertices.push_back(0);
-  vertices.push_back(m);
-  */
   return vertices;
 }

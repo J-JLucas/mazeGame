@@ -1,5 +1,5 @@
 #include "BinaryTreeMaze.h"
-#include "../../common.h"
+#include "../../RNG.h"
 #include "../Cell.h"
 #include "../Enums.h"
 #include "../Grid.h"

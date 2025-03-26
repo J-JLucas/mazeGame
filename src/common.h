@@ -4,21 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <fstream>
 #include <iostream>
-#include <random>
 #include <sstream>
-
-class RNG {
-  std::mt19937 rng;
-  std::uniform_int_distribution<> distribution;
-
-public:
-  RNG(int n) : rng(std::random_device{}())
-  {
-    distribution = std::uniform_int_distribution<>(0, n);
-  }
-
-  int getRandInt() { return distribution(rng); }
-};
 
 // this function is called whenever the window is resized
 inline void framebuffer_size_callback(GLFWwindow *window, int width, int height)

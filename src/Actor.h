@@ -40,4 +40,6 @@ public:
   {
     return glm::normalize(glm::cross(forward_vector, up_vector));
   }
+
+  AABB *getCollisionBox() { return &bounding_box; }
 };

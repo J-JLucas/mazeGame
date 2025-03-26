@@ -129,6 +129,11 @@ int main(int argc, char *argv[])
     glDrawArrays(GL_TRIANGLES, 0, object_vertices.size() / 3);
     glBindVertexArray(0);
 
+    if (world.reachedExit(&player)) {
+      std::cout << "Reached Exit!" << std::endl;
+      break;
+    }
+
     // Swap buffers and poll events
     glfwSwapBuffers(window);
     glfwPollEvents();
