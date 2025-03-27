@@ -54,7 +54,7 @@ glm::vec3 World::validateMove(glm::vec3 old_pos, glm::vec3 new_pos,
 
 bool World::reachedExit(Player *player)
 {
-  return gridMap.isIntersectExit(player);
+  return gridMap.getExitCell()->isPlayerAtExit(player);
 }
 
 void World::registerCollision(AABB &box) { collisionBoxes.push_back(&box); }

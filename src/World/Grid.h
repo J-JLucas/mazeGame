@@ -15,7 +15,6 @@ private:
 
   Cell *entranceCell;
   Cell *exitCell;
-  AABB *exitBox;
 
 public:
   Grid();
@@ -28,6 +27,5 @@ public:
   void initEntranceExit();
   Cell *getEntranceCell() { return entranceCell; }
   Cell *getExitCell() { return exitCell; }
-  bool isIntersectExit(class Player *player);
   std::vector<float> buildMazeGeometry(std::vector<AABB *> &collisionBoxes);
 };

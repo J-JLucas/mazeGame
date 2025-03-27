@@ -1,8 +1,19 @@
 #include "Cell.h"
 #include "../AABB.h"
+#include "../Player.h"
 #include "Enums.h"
-
 /* Cell */
+
+Cell::~Cell()
+{
+  for (int i = 0; i < 4; i++) {
+    if (wallCollision[i] != nullptr) {
+      delete wallCollision[i];
+    }
+  }
+  delete exitTriggerBox;
+}
+
 void Cell::link(Direction d, Cell *neighbor, bool bidirectional)
 {
   // Open the wall in this cell
@@ -24,36 +35,73 @@ void Cell::unlink(Direction d, Cell *neighbor, bool bidirectional)
   }
 }
 
+void Cell::makeExitCell()
+{
+  isExit = true;
+  exitTriggerBox = new AABB(
+      glm::vec3(this->getCell_x() + 0.4f, 0, this->getCell_y() + 0.4f),
+      glm::vec3(this->getCell_x() + 0.6f, 1, this->getCell_y() + 0.6f));
+}
+
+bool Cell::isPlayerAtExit(Player *player)
+{
+  return exitTriggerBox->intersects(*(player->getCollisionBox()));
+}
+
 void Cell::buildGeometry(std::vector<float> &vertices)
 {
   // ** FLOOR - 2 tri's, 4 vertices (2 shared) **
+  // special colour floor if exit cell
   // first triangle
   // v1
   vertices.push_back(j); // x
   vertices.push_back(0); // y is vertical in opengl
   vertices.push_back(i); // z
+
   // c1
-  vertices.push_back(0.0f);
-  vertices.push_back(0.7f);
-  vertices.push_back(0.35f);
+  if (isExit) {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+  }
+  else {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.7f);
+    vertices.push_back(0.35f);
+  }
 
   // v2
   vertices.push_back(j + 1);
   vertices.push_back(0);
   vertices.push_back(i);
+
   // c2
-  vertices.push_back(0.0f);
-  vertices.push_back(0.7f);
-  vertices.push_back(0.35f);
+  if (isExit) {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+  }
+  else {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.7f);
+    vertices.push_back(0.35f);
+  }
 
   // v3
   vertices.push_back(j); // x
   vertices.push_back(0);
   vertices.push_back(i + 1);
   // c3
-  vertices.push_back(0.0f);
-  vertices.push_back(0.7f);
-  vertices.push_back(0.35f);
+  if (isExit) {
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+  }
+  else {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.7f);
+    vertices.push_back(0.35f);
+  }
 
   // second triangle
   // v4
@@ -61,27 +109,48 @@ void Cell::buildGeometry(std::vector<float> &vertices)
   vertices.push_back(0);
   vertices.push_back(i + 1);
   // c4
-  vertices.push_back(0.0f);
-  vertices.push_back(0.7f);
-  vertices.push_back(0.35f);
+  if (isExit) {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+  }
+  else {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.7f);
+    vertices.push_back(0.35f);
+  }
 
   // v3
   vertices.push_back(j);
   vertices.push_back(0);
   vertices.push_back(i + 1);
   // c3
-  vertices.push_back(0.0f);
-  vertices.push_back(0.7f);
-  vertices.push_back(0.35f);
+  if (isExit) {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+  }
+  else {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.7f);
+    vertices.push_back(0.35f);
+  }
 
   // v2
   vertices.push_back(j + 1);
   vertices.push_back(0);
   vertices.push_back(i);
   // c2
-  vertices.push_back(0.0f);
-  vertices.push_back(0.7f);
-  vertices.push_back(0.35f);
+  if (isExit) {
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+  }
+  else {
+    vertices.push_back(0.0f);
+    vertices.push_back(0.7f);
+    vertices.push_back(0.35f);
+  }
 
   // ** WALLS - 2 tri's, 4 vertices (2 shared) **
 
@@ -337,14 +406,5 @@ void Cell::buildGeometry(std::vector<float> &vertices)
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     vertices.push_back(1.0f);
-  }
-}
-
-Cell::~Cell()
-{
-  for (int i = 0; i < 4; i++) {
-    if (wallCollision[i] != nullptr) {
-      delete wallCollision[i];
-    }
   }
 }

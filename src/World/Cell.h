@@ -17,6 +17,7 @@ private:
   // default state walls are closed, generation algies will carve out openings
   // 0 = opening, 1 = wall
   bool walls[4] = {true, true, true, true};
+  bool isExit = false;
 
 public:
   ~Cell();
@@ -32,8 +33,11 @@ public:
   int getNumWalls() const { return numWalls; }
 
   class AABB *wallCollision[4] = {nullptr, nullptr, nullptr, nullptr};
+  class AABB *exitTriggerBox = nullptr;
 
   void link(Direction d, Cell *neighbor, bool bidirectional = true);
   void unlink(Direction d, Cell *neighbor, bool bidirectional = true);
+  void makeExitCell();
+  bool isPlayerAtExit(class Player *player);
   void buildGeometry(std::vector<float> &vertices);
 };
