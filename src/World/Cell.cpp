@@ -7,6 +7,7 @@ void Cell::link(Direction d, Cell *neighbor, bool bidirectional)
 {
   // Open the wall in this cell
   walls[static_cast<int>(d)] = false;
+  numWalls--;
 
   if (bidirectional) {
     // Open the opposite wall in the neighboring cell

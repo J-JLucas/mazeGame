@@ -79,18 +79,19 @@ void Grid::initEntranceExit()
 {
   entranceCell = getRandomCell();
   exitCell = getRandomCell();
-  while (entranceCell == exitCell) {
+  while ((entranceCell == exitCell) || (exitCell->getNumWalls() != 3)) {
     exitCell = getRandomCell();
   }
 
   exitBox = new AABB(
-      glm::vec3(exitCell->getCell_x() + 0.2f, 0, exitCell->getCell_y() + 0.2f),
-      glm::vec3(exitCell->getCell_x() + 0.8f, 1, exitCell->getCell_y() + 0.8f));
+      glm::vec3(exitCell->getCell_x() + 0.4f, 0, exitCell->getCell_y() + 0.4f),
+      glm::vec3(exitCell->getCell_x() + 0.6f, 1, exitCell->getCell_y() + 0.6f));
 
   std::cout << "Entrance cell: " << entranceCell->getCell_x() << ", "
             << entranceCell->getCell_y() << std::endl;
   std::cout << "Exit cell: " << exitCell->getCell_x() << ", "
-            << exitCell->getCell_y() << std::endl;
+            << exitCell->getCell_y() << " num walls:" << exitCell->getNumWalls()
+            << std::endl;
 }
 
 bool Grid::isIntersectExit(Player *player)

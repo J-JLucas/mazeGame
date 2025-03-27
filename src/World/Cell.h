@@ -11,6 +11,7 @@ class Cell {
 private:
   // cell coords
   int i, j;
+  int numWalls = 4;
   float collisionWidth = .1f;
   // used to determine if a wall exists in that direction from center of cell
   // default state walls are closed, generation algies will carve out openings
@@ -28,6 +29,8 @@ public:
   int getCell_x() const { return j; }
   int getCell_y() const { return i; }
   bool isWalled(Direction d) { return walls[static_cast<int>(d)]; }
+  int getNumWalls() const { return numWalls; }
+
   class AABB *wallCollision[4] = {nullptr, nullptr, nullptr, nullptr};
 
   void link(Direction d, Cell *neighbor, bool bidirectional = true);

@@ -9,8 +9,8 @@
 
 class Grid {
 private:
-  static constexpr unsigned int m = 3;
-  static constexpr unsigned int n = 3;
+  static constexpr unsigned int m = 8;
+  static constexpr unsigned int n = 8;
   Cell cells[m][n];
 
   Cell *entranceCell;

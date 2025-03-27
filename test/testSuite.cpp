@@ -78,6 +78,8 @@ int main(int argc, char *argv[])
   float lastFrameTime = glfwGetTime();
   float movementSpeed = 3.0f; // units per second
   float rotationSpeed = 90.0f;
+  bool inputEnabled = true;
+  float yPos = player.getPosition().y;
 
   // Main Render Loop
   while (!glfwWindowShouldClose(window)) {
@@ -91,26 +93,38 @@ int main(int argc, char *argv[])
     float deltaTime = currentFrameTime - lastFrameTime;
     lastFrameTime = currentFrameTime;
 
-    glm::vec3 cameraPos = player.getPosition();
-    glm::vec3 cameraDirection = player.getForwardVector();
-    glm::vec3 up = player.getUpVector();
-    glm::vec3 right = player.getRightVector();
-
-    // world.printDebugPosition(&player);
+    glm::vec3 cameraPos;
+    glm::vec3 cameraDirection;
+    glm::vec3 up;
 
     // Handle keyboard input for movement
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-      player.move(GLFW_KEY_W, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-      player.move(GLFW_KEY_S, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-      player.move(GLFW_KEY_A, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-      player.move(GLFW_KEY_D, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-      player.move(GLFW_KEY_LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-      player.move(GLFW_KEY_RIGHT, deltaTime);
+    if (inputEnabled) {
+      if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        player.move(GLFW_KEY_W, deltaTime);
+      if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        player.move(GLFW_KEY_S, deltaTime);
+      if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        player.move(GLFW_KEY_A, deltaTime);
+      if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        player.move(GLFW_KEY_D, deltaTime);
+      if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+        player.move(GLFW_KEY_LEFT, deltaTime);
+      if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        player.move(GLFW_KEY_RIGHT, deltaTime);
+
+      cameraPos = player.getPosition();
+      cameraDirection = player.getForwardVector();
+      up = player.getUpVector();
+    }
+    else {
+      if (yPos < 10.0f) {
+        yPos += deltaTime * 2.0f;
+      }
+      glm::vec3 lookCenter = player.getPosition();
+      cameraPos = glm::vec3(lookCenter.x, yPos, lookCenter.z);
+      cameraDirection = glm::vec3(0.0f, -1.0f, 0.0f);
+      up = glm::vec3(0.0f, 0.0f, -1.0f);
+    }
 
     // Compute the view matrix using the updated camera position
     glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraDirection, up);
@@ -129,9 +143,9 @@ int main(int argc, char *argv[])
     glDrawArrays(GL_TRIANGLES, 0, object_vertices.size() / 3);
     glBindVertexArray(0);
 
-    if (world.reachedExit(&player)) {
+    if (inputEnabled && world.reachedExit(&player)) {
       std::cout << "Reached Exit!" << std::endl;
-      break;
+      inputEnabled = false;
     }
 
     // Swap buffers and poll events
